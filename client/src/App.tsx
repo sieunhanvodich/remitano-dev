@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <main className="app">
+      <main className="flex flex-col">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/share" element={<ShareVideo />} />
