@@ -5,7 +5,7 @@ import homeIcon from '../images/home.png';
 export default function Header() {
   const navigate = useNavigate();
   return (
-    <div className="header flex justify-between items-center p-4 border-b">
+    <div className="header flex justify-between items-center p-4 border-b mb-5">
       <div
         className="page-name flex items-center cursor-pointer"
         onClick={() => navigate('/')}
