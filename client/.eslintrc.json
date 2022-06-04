@@ -17,7 +17,8 @@
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": ["client/tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
@@ -26,6 +27,8 @@
       {
         "extensions": [".js", ".jsx", ".tsx", ".ts"]
       }
-    ]
+    ],
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0
   }
 }
