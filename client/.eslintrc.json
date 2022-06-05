@@ -18,7 +18,7 @@
     },
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": ["tsconfig.json"]
+    "project": ["./tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
@@ -29,6 +29,12 @@
       }
     ],
     "jsx-a11y/click-events-have-key-events": 0,
-    "jsx-a11y/no-static-element-interactions": 0
+    "jsx-a11y/no-static-element-interactions": 0,
+    "implicit-arrow-linebreak": 0,
+    "@typescript-eslint/no-unused-vars": 1,
+    "object-curly-newline": 0,
+    "@typescript-eslint/indent": 0,
+    "react/jsx-no-constructed-context-values": 0,
+    "react/jsx-one-expression-per-line": 0
   }
 }

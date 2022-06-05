@@ -1,10 +1,10 @@
 import React from 'react';
-import SharedVideo from '../components/SharedVideo';
+import SharedMovie from '../components/SharedMovie';
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
-      <SharedVideo />
+      <SharedMovie />
     </div>
   );
 }

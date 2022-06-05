@@ -2,7 +2,7 @@ import React from 'react';
 import thumbsUpReg from '../images/thumbs-up-regular.svg';
 import thumbsDownReg from '../images/thumbs-down-regular.svg';
 
-export default function SharedVideo() {
+export default function SharedMovie() {
   return (
     <div className="flex gap-x-5 w-1/2">
       <div className="video">

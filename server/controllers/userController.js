@@ -19,7 +19,7 @@ const login = asyncHandler(async (req, res) => {
     });
   } else if (!(await user.matchPassword(password))) {
     console.log("go here");
-    res.status(401);
+    res.status(400);
     throw new Error("Invalid password");
   }
 
