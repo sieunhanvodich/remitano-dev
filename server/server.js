@@ -4,6 +4,7 @@ import connectDB from "./config/database.js";
 import cors from "cors";
 
 import userRoutes from "./routes/userRoutes.js";
+import movieRoutes from "./routes/movieRoutes.js";
 import { errorHandler, requestNotFound } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
+app.use("/api/movies", movieRoutes);
 
 app.use(requestNotFound);
 app.use(errorHandler);
