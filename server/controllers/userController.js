@@ -1,9 +1,14 @@
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
-import { generateToken } from "../share/util.js";
+import { generateToken, isValidEmail } from "../share/util.js";
 
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+
+  if (email.trim === "" || password.trim() === "" || !isValidEmail(email)) {
+    res.status(400);
+    throw new Error("Invalid value");
+  }
 
   let user = await User.findOne({ email });
 
