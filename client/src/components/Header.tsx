@@ -18,6 +18,12 @@ export default function Header() {
 
   const doLogin = async () => {
     try {
+      if (!email.trim() || !password.trim()) {
+        toast('Invalid input value', {
+          type: 'warning',
+        });
+        return;
+      }
       setIsLoading(true);
       const userResponse = await login({ email, password });
       dispatch({

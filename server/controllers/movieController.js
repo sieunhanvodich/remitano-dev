@@ -42,7 +42,7 @@ const shareMovie = asyncHandler(async (req, res) => {
       description: movieInfo.data.items[0].snippet.description,
     });
 
-    res.json(movie);
+    res.json({ message: "success" });
   } catch (error) {
     throw new Error(error);
   }

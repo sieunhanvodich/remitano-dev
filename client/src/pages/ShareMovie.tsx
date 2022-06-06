@@ -7,6 +7,12 @@ export default function ShareVideo() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const doShareMovie = () => {
+    if (!movieUrl.trim()) {
+      toast('Invalid input value', {
+        type: 'warning',
+      });
+      return;
+    }
     setIsLoading(true);
     shareMovie(movieUrl)
       .then(() => {
