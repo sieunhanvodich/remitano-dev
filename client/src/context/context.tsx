@@ -4,7 +4,6 @@ import { setData, getData, clearData } from '../share/util';
 
 const defaultState: UserState = {
   userInfo: getData('user'),
-  error: null,
 };
 
 const UserContext = createContext<
@@ -17,18 +16,11 @@ function userReducer(state: UserState, action: Action) {
       setData('user', action.payload?.userInfo);
       return {
         userInfo: action.payload?.userInfo,
-        error: null,
-      };
-    case ActionType.USER_LOGIN_FAIL:
-      return {
-        userInfo: null,
-        error: action.payload?.error,
       };
     case ActionType.USER_LOGOUT:
       clearData();
       return {
         userInfo: null,
-        error: null,
       };
     default:
       return state;

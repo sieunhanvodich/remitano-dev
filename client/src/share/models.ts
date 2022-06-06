@@ -11,13 +11,11 @@ export interface UserResponse {
 
 export enum ActionType {
   USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
-  USER_LOGIN_FAIL = 'USER_LOGIN_FAIL',
   USER_LOGOUT = 'USER_LOGOUT',
 }
 
 export interface UserState {
   userInfo?: UserResponse | null;
-  error?: string | null | unknown;
 }
 
 export interface Action {

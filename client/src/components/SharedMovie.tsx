@@ -16,6 +16,7 @@ interface Props {
 
 export default function SharedMovie({ movie, refresh }: Props) {
   const [showDescription, setShowDescription] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     _id: id,
@@ -31,6 +32,7 @@ export default function SharedMovie({ movie, refresh }: Props) {
   } = useUser();
 
   const doLikeMovie = () => {
+    setIsLoading(true);
     likeMovie(id)
       .then(() => {
         refresh();
@@ -39,10 +41,14 @@ export default function SharedMovie({ movie, refresh }: Props) {
         toast(error, {
           type: 'warning',
         });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const doDislikeMovie = () => {
+    setIsLoading(true);
     dislikeMovie(id)
       .then(() => {
         refresh();
@@ -51,6 +57,9 @@ export default function SharedMovie({ movie, refresh }: Props) {
         toast(error, {
           type: 'warning',
         });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -73,16 +82,24 @@ export default function SharedMovie({ movie, refresh }: Props) {
           {userInfo ? (
             <>
               {!dislikedByUsers.includes(userId) ? (
-                <div onClick={() => doLikeMovie()}>
+                <button
+                  type="button"
+                  onClick={() => doLikeMovie()}
+                  disabled={isLoading}
+                >
                   <img
                     src={likedByUsers.includes(userId) ? thumbsUp : thumbsUpReg}
-                    className="w-9 h-9 cursor-pointer"
+                    className="w-9 h-9"
                     alt=""
                   />
-                </div>
+                </button>
               ) : null}
               {!likedByUsers.includes(userId) ? (
-                <div onClick={() => doDislikeMovie()}>
+                <button
+                  type="button"
+                  onClick={() => doDislikeMovie()}
+                  disabled={isLoading}
+                >
                   <img
                     src={
                       dislikedByUsers.includes(userId)
@@ -92,7 +109,7 @@ export default function SharedMovie({ movie, refresh }: Props) {
                     className="w-9 h-9 cursor-pointer"
                     alt=""
                   />
-                </div>
+                </button>
               ) : null}
             </>
           ) : null}

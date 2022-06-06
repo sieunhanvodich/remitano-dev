@@ -4,8 +4,10 @@ import { shareMovie } from '../services/movieService';
 
 export default function ShareVideo() {
   const [movieUrl, setMovieUrl] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const doShareMovie = () => {
+    setIsLoading(true);
     shareMovie(movieUrl)
       .then(() => {
         setMovieUrl('');
@@ -17,6 +19,9 @@ export default function ShareVideo() {
         toast(error, {
           type: 'warning',
         });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -44,6 +49,7 @@ export default function ShareVideo() {
               className="w-full bg-blue-700 text-white px-2 border border-blue-700 rounded mt-10"
               type="button"
               onClick={() => doShareMovie()}
+              disabled={isLoading}
             >
               Share
             </button>
