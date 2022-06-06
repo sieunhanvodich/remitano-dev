@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast, ToastContent } from 'react-toastify';
 import SharedMovie from '../components/SharedMovie';
 import { getMovies } from '../services/movieService';
 import { Movie } from '../share/models';
@@ -17,7 +18,9 @@ export default function Home() {
         const response = await getMovies();
         setMovies(response);
       } catch (error) {
-        console.log(error);
+        toast(error as ToastContent, {
+          type: 'warning',
+        });
       }
     }
 

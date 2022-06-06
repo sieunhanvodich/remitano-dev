@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import cn from 'classnames';
 import { Movie } from '../share/models';
 import thumbsUpReg from '../images/thumbs-up-regular.svg';
@@ -35,7 +36,9 @@ export default function SharedMovie({ movie, refresh }: Props) {
         refresh();
       })
       .catch((error) => {
-        console.log(error);
+        toast(error, {
+          type: 'warning',
+        });
       });
   };
 
@@ -45,7 +48,9 @@ export default function SharedMovie({ movie, refresh }: Props) {
         refresh();
       })
       .catch((error) => {
-        console.log(error);
+        toast(error, {
+          type: 'warning',
+        });
       });
   };
 

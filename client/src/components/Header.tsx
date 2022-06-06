@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContent } from 'react-toastify';
 import homeIcon from '../images/home.png';
 import login from '../services/userService';
 import { useUser } from '../context/context';
@@ -23,11 +24,15 @@ export default function Header() {
         type: ActionType.USER_LOGIN_SUCCESS,
         payload: { userInfo: userResponse },
       });
+      toast('Login succeed!', {
+        type: 'success',
+      });
+      setEmail('');
+      setPassword('');
       setIsLoading(false);
     } catch (error) {
-      dispatch({
-        type: ActionType.USER_LOGIN_FAIL,
-        payload: { error },
+      toast(error as ToastContent, {
+        type: 'warning',
       });
       setIsLoading(false);
     }

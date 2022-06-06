@@ -7,7 +7,7 @@ const login = asyncHandler(async (req, res) => {
 
   if (email.trim === "" || password.trim() === "" || !isValidEmail(email)) {
     res.status(400);
-    throw new Error("Invalid value");
+    throw new Error("Invalid input value");
   }
 
   let user = await User.findOne({ email });
@@ -18,7 +18,6 @@ const login = asyncHandler(async (req, res) => {
       password,
     });
   } else if (!(await user.matchPassword(password))) {
-    console.log("go here");
     res.status(400);
     throw new Error("Invalid password");
   }
