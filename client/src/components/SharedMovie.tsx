@@ -1,37 +1,106 @@
-import React from 'react';
+import React, { useState } from 'react';
+import cn from 'classnames';
+import { Movie } from '../share/models';
 import thumbsUpReg from '../images/thumbs-up-regular.svg';
+import thumbsUp from '../images/thumbs-up.svg';
 import thumbsDownReg from '../images/thumbs-down-regular.svg';
+import thumbsDown from '../images/thumbs-down.svg';
+import { useUser } from '../context/context';
+import { likeMovie, dislikeMovie } from '../services/movieService';
 
-export default function SharedMovie() {
+interface Props {
+  movie: Movie;
+  refresh: () => void;
+}
+
+export default function SharedMovie({ movie, refresh }: Props) {
+  const [showDescription, setShowDescription] = useState<boolean>(false);
+
+  const {
+    _id: id,
+    youtubeId,
+    user: { _id: userId, email: userEmail },
+    title,
+    description,
+    likedByUsers,
+    dislikedByUsers,
+  } = movie;
+  const {
+    state: { userInfo },
+  } = useUser();
+
+  const doLikeMovie = () => {
+    likeMovie(id)
+      .then(() => {
+        refresh();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const doDislikeMovie = () => {
+    dislikeMovie(id)
+      .then(() => {
+        refresh();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <div className="flex gap-x-5 w-1/2">
-      <div className="video">
+    <div className="flex gap-x-5 w-1/2 py-4">
+      <div className="video ">
         <iframe
-          width="400"
-          height="250"
-          src="https://www.youtube.com/embed/PwSiopkyBb4"
-          title="YouTube video player"
+          className="w-[450px] h-[250px]"
+          src={`https://www.youtube.com/embed/${youtubeId}`}
+          title={title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
       </div>
-      <div className="video-info">
-        <div className="title text-red-500 font-bold">Movie title</div>
+      <div className="video-info ">
+        <div className="title text-red-500 font-bold">{title}</div>
         <div className="flex gap-x-2 items-center">
-          <span>Shared by: someone@gmail.com</span>
-          <img src={thumbsUpReg} className="w-9 h-9 cursor-pointer" alt="" />
-          <img src={thumbsDownReg} className="w-9 h-9 cursor-pointer" alt="" />
+          <span>Shared by: {userEmail}</span>
+          {userInfo ? (
+            <>
+              {!dislikedByUsers.includes(userId) ? (
+                <div onClick={() => doLikeMovie()}>
+                  <img
+                    src={likedByUsers.includes(userId) ? thumbsUp : thumbsUpReg}
+                    className="w-9 h-9 cursor-pointer"
+                    alt=""
+                  />
+                </div>
+              ) : null}
+              {!likedByUsers.includes(userId) ? (
+                <div onClick={() => doDislikeMovie()}>
+                  <img
+                    src={
+                      dislikedByUsers.includes(userId)
+                        ? thumbsDown
+                        : thumbsDownReg
+                    }
+                    className="w-9 h-9 cursor-pointer"
+                    alt=""
+                  />
+                </div>
+              ) : null}
+            </>
+          ) : null}
         </div>
         <div className="flex flex-col gap-y-2">
           <div>Description:</div>
-          <div className="font-bold">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-            pretium sed ex quis porta. Quisque fermentum orci vel ultrices
-            porta. Nulla lacinia ut ex a euismod. Mauris purus metus, eleifend
-            tristique eleifend at, pretium non risus. Nullam sed ipsum ac ex
-            dapibus tempus. Nullam sagittis, risus pharetra eleifend
-            condimentum, libero mauris faucibus urna
+          <div
+            className={cn('font-bold whitespace-pre-line cursor-pointer', {
+              'line-clamp-5': !showDescription,
+            })}
+            onClick={() => setShowDescription(!showDescription)}
+          >
+            {description}
           </div>
         </div>
       </div>

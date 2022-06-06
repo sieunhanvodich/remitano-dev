@@ -25,4 +25,14 @@ export interface Action {
   payload?: UserState;
 }
 
+export interface Movie {
+  _id: string;
+  youtubeId: string;
+  user: Omit<UserResponse, 'token'>;
+  title: string;
+  description: string;
+  likedByUsers: string[];
+  dislikedByUsers: string[];
+}
+
 export type Dispatch = (action: Action) => void;
