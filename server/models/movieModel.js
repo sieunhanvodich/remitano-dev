@@ -20,6 +20,7 @@ const movieSchema = mongoose.Schema(
       required: true,
     },
     likedByUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    dislikedByUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,

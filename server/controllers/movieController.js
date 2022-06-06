@@ -44,7 +44,6 @@ const shareMovie = asyncHandler(async (req, res) => {
 
     res.json(movie);
   } catch (error) {
-    res.status(500);
     throw new Error(error);
   }
 });
@@ -59,7 +58,7 @@ const likeMovie = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error("Movie not found");
     }
-    //If movie has already been liked by user then do unlike
+    //If movie has already been liked by user then undo like
     if (movie.likedByUsers.includes(userId)) {
       movie.likedByUsers = movie.likedByUsers.filter((item) => {
         return !item.equals(userId);
@@ -72,22 +71,49 @@ const likeMovie = asyncHandler(async (req, res) => {
       message: "Success",
     });
   } catch (error) {
-    res.status(500);
+    throw new Error(error);
+  }
+});
+
+const dislikeMovie = asyncHandler(async (req, res) => {
+  try {
+    const { movieId } = req.body;
+    const userId = req.user._id;
+    const movie = await Movie.findById(movieId);
+
+    if (!movie) {
+      res.status(400);
+      throw new Error("Movie not found");
+    }
+    //If movie has already been disliked by user then undo dislike
+    if (movie.dislikedByUsers.includes(userId)) {
+      movie.dislikedByUsers = movie.dislikedByUsers.filter((item) => {
+        return !item.equals(userId);
+      });
+    } else {
+      movie.dislikedByUsers.push(userId);
+    }
+    movie.save();
+    res.json({
+      message: "Success",
+    });
+  } catch (error) {
     throw new Error(error);
   }
 });
 
 const getMovies = asyncHandler(async (req, res) => {
   try {
-    const movies = await Movie.find({}).sort({ createdAt: -1 }).select("-__v");
+    const movies = await Movie.find({})
+      .sort({ createdAt: -1 })
+      .select("-__v")
+      .populate("user", "-__v -createdAt -updatedAt -password");
     res.json({
       movies,
     });
-    res.json;
   } catch (error) {
-    res.status(500);
     throw new Error(error);
   }
 });
 
-export { shareMovie, likeMovie, getMovies };
+export { shareMovie, likeMovie, getMovies, dislikeMovie };
