@@ -1,6 +1,6 @@
 # Funny Movies
 
-## Instalation
+## Installation
 
 1. Create `.env` file in root of `server` folder and fill values for the following
 
