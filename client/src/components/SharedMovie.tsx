@@ -64,7 +64,7 @@ export default function SharedMovie({ movie, refresh }: Props) {
   };
 
   return (
-    <div className="flex gap-x-5 w-1/2 py-4">
+    <div className="flex gap-x-5 w-1/2 py-4" data-testid="movie-container">
       <div className="video ">
         <iframe
           className="w-[450px] h-[250px]"
@@ -80,7 +80,10 @@ export default function SharedMovie({ movie, refresh }: Props) {
         <div className="flex gap-x-2 items-center">
           <span>Shared by: {userEmail}</span>
           {userInfo ? (
-            <>
+            <div
+              className="gap-x-2 flex item-centers"
+              data-testid="like-container"
+            >
               {!dislikedByUsers.includes(userId) ? (
                 <button
                   type="button"
@@ -111,7 +114,7 @@ export default function SharedMovie({ movie, refresh }: Props) {
                   />
                 </button>
               ) : null}
-            </>
+            </div>
           ) : null}
         </div>
         <div className="flex flex-col gap-y-2">

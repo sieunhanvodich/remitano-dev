@@ -29,9 +29,17 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center divide-y">
-      {movies.map((movie) => (
-        <SharedMovie movie={movie} refresh={doRefresh} key={movie.youtubeId} />
-      ))}
+      {!movies.length ? (
+        <p className="text-grey-300">No movie shared</p>
+      ) : (
+        movies.map((movie) => (
+          <SharedMovie
+            movie={movie}
+            refresh={doRefresh}
+            key={movie.youtubeId}
+          />
+        ))
+      )}
     </div>
   );
 }

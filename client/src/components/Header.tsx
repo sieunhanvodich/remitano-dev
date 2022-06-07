@@ -30,7 +30,7 @@ export default function Header() {
         type: ActionType.USER_LOGIN_SUCCESS,
         payload: { userInfo: userResponse },
       });
-      toast('Login succeed!', {
+      toast('Login successfully!', {
         type: 'success',
       });
       setEmail('');

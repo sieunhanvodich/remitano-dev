@@ -17,7 +17,7 @@ export default function ShareVideo() {
     shareMovie(movieUrl)
       .then(() => {
         setMovieUrl('');
-        toast('Sharing movie succeed!', {
+        toast('Movie shared successfully!', {
           type: 'success',
         });
       })
